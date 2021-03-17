@@ -227,14 +227,16 @@ func TeslaMateAPICarsStatusV1(c *gin.Context) {
 		mqtt.ERROR = log.New(os.Stdout, "", 0)
 	*/
 
+	mqttClientID := "teslamateapi-" + randstr.String(4)
+	log.Println("Client ID: " + mqttClientID)
 	// create options for the MQTT client connection
 	opts := mqtt.NewClientOptions().AddBroker(mqttURL)
 	// setting generic MQTT settings in opts
-	opts.SetKeepAlive(2 * time.Second)                    // setting keepalive for client
-	opts.SetDefaultPublishHandler(f)                      // using f mqtt.MessageHandler function
-	opts.SetPingTimeout(1 * time.Second)                  // setting pingtimeout for client
-	opts.SetClientID("teslamateapi-" + randstr.String(4)) // setting mqtt client id for TeslaMateApi
-	opts.SetCleanSession(true)                            // removal of all subscriptions on disconnect
+	opts.SetKeepAlive(2 * time.Second)   // setting keepalive for client
+	opts.SetDefaultPublishHandler(f)     // using f mqtt.MessageHandler function
+	opts.SetPingTimeout(1 * time.Second) // setting pingtimeout for client
+	opts.SetClientID(mqttClientID)       // setting mqtt client id for TeslaMateApi
+	opts.SetCleanSession(true)           // removal of all subscriptions on disconnect
 
 	// creating MQTT connection with options
 	m := mqtt.NewClient(opts)
