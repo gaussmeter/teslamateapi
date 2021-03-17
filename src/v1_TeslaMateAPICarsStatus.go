@@ -247,6 +247,9 @@ func TeslaMateAPICarsStatusV1(c *gin.Context) {
 		log.Println("TeslaMateAPICarsStatus successfully connected to mqtt.")
 	}
 
+	// disconnecting from MQTT
+	defer m.Disconnect(250)
+
 	// creating structs for /cars
 	// BatteryDetails struct - child of MQTTInformation
 	type BatteryDetails struct {
@@ -453,9 +456,6 @@ func TeslaMateAPICarsStatusV1(c *gin.Context) {
 
 			// adding some short sleep before disconnecting
 			time.Sleep(100 * time.Millisecond)
-
-			// disconnecting from MQTT
-			defer m.Disconnect(250)
 
 			// setting data from MQTT into data fields to return
 			MQTTInformationData.DisplayName = MQTTDataDisplayName
