@@ -107,6 +107,8 @@ func main() {
 			// v1 /api/v1/cars/:CarID/wake_up endpoints
 			v1.POST("/cars/:CarID/wake_up", TeslaMateAPICarsCommandV1)
 
+			v1.GET("/cars/:CarID/vehicle_data", TeslaMateAPICarsVehicleDataV1)
+
 			// v1 /api/v1/globalsettings endpoints
 			v1.GET("/globalsettings", TeslaMateAPIGlobalsettingsV1)
 		}
